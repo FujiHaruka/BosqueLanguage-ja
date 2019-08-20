@@ -7,7 +7,7 @@ Bosque 言語は [TypeScript](https://www.typescriptlang.org/) にインスパ�
 
 - [0 主な特徴](#0-Highlight-Features)
   - [0.1 イミュータブルな値](#0.1-Immutable-Values)
-  - [0.2 Block Scoping](#0.2-Block-Scoping)
+  - [0.2 ブロックスコープ](#0.2-Block-Scoping)
   - [0.3 Reference Parameter Threading](#0.3-Reference-Parameter-Threading)
   - [0.4 Typed Strings](#0.4-Typed-Strings)
   - [0.5 Flexible Invocations](#0.5-Flexible-Invocations)
@@ -83,15 +83,19 @@ Bosque プログラミング言語はコードの記述をシンプルに、明�
 
 この節では Bosque プログラミング言語の多くの顕著でユニークな特徴と設計上の選択の中から最重要点を紹介します。
 
-## <a name="0.1-Immutable-Values"></a>0.1 Immutable Values
+## <a name="0.1-Immutable-Values"></a>0.1 イミュータブルな値
 
-All values in the Bosque language are immutable!
+Bosque 言語のすべての値はイミュータブルです！
 
-Reasoning about and understanding the effect of a statement or block of code is greatly simplified when it is side-effect free. Functional languages have long benefited from the simplifications to program development, sophisticated tooling, and aggressive compiler optimizations that this model allows. From this perspective the natural choice for the Bosque language is to adopt a pure functional model with immutable data only.
+コードのある文やブロックの影響を推測し理解する上で、それが副作用を持たなければ、非常にシンプルになります。
+関数型言語はプログラム開発の単純化、洗練されたツール、このモデルが可能にするコンパイラの積極的な最適化のメリットを受けてきました。
+この観点から Bosque 言語は自然な選択として、イミュータブルなデータだけを扱うという順数関数のモデルを採用しました。
 
-## <a name="0.2-Block-Scoping"></a>0.2 Block Scoping
+## <a name="0.2-Block-Scoping"></a>0.2 ブロックスコープ
 
-Local variables with block structured code is a very appealing model for structuring code. The Bosque language fuses functional programming with block scopes and `{...}` braces by allowing multiple assignments to updatable variables `var!` ([6.3 Variable Assignment](#6.3-Variable-Assignment)). This supports functional style programming in a block-scoped language and allows developers to write code such as:
+コードをブロックで構造化しローカル変数を使うことは、コードを構造化する上で非常に魅力的なモデルです。
+Bosque 言語は関数型言語とブロックスコープと `{...}` 括弧を、更新可能な変数 `var!` に複数回の割り当てを許すことにより融合します ([6.3 変数の割り当て](#6.3-Variable-Assignment))。
+これによってブロックスコープの言語における関数型スタイルのプログラミングが可能になり、開発者は次のようなコードを書けます。
 
 ```none
 function abs(x: Int): Int {

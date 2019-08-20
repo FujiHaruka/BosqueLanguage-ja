@@ -23,7 +23,7 @@ texts:
 ---
 texts:
   en: "[0.2 Block Scoping](#0.2-Block-Scoping)"
-  ja: "[0.2 Block Scoping](#0.2-Block-Scoping)"
+  ja: "[0.2 ブロックスコープ](#0.2-Block-Scoping)"
 ---
 texts:
   en: "[0.3 Reference Parameter Threading](#0.3-Reference-Parameter-Threading)"
@@ -311,23 +311,33 @@ texts:
 ---
 texts:
   en: <a name="0.1-Immutable-Values"></a>0.1 Immutable Values
-  ja: __COPY__
+  ja: <a name="0.1-Immutable-Values"></a>0.1 イミュータブルな値
 ---
 texts:
   en: All values in the Bosque language are immutable!
-  ja: __COPY__
+  ja: Bosque 言語のすべての値はイミュータブルです！
 ---
 texts:
   en: Reasoning about and understanding the effect of a statement or block of code is greatly simplified when it is side-effect free. Functional languages have long benefited from the simplifications to program development, sophisticated tooling, and aggressive compiler optimizations that this model allows. From this perspective the natural choice for the Bosque language is to adopt a pure functional model with immutable data only.
-  ja: __COPY__
+  ja: >-
+    コードのある文やブロックの影響を推測し理解する上で、それが副作用を持たなければ、非常にシンプルになります。
+
+    関数型言語はプログラム開発の単純化、洗練されたツール、このモデルが可能にするコンパイラの積極的な最適化のメリットを受けてきました。
+
+    この観点から Bosque 言語は自然な選択として、イミュータブルなデータだけを扱うという順数関数のモデルを採用しました。
 ---
 texts:
   en: <a name="0.2-Block-Scoping"></a>0.2 Block Scoping
-  ja: __COPY__
+  ja: <a name="0.2-Block-Scoping"></a>0.2 ブロックスコープ
 ---
 texts:
   en: "Local variables with block structured code is a very appealing model for structuring code. The Bosque language fuses functional programming with block scopes and `{...}` braces by allowing multiple assignments to updatable variables `var!` ([6.3 Variable Assignment](#6.3-Variable-Assignment)). This supports functional style programming in a block-scoped language and allows developers to write code such as:"
-  ja: __COPY__
+  ja: >-
+    コードをブロックで構造化しローカル変数を使うことは、コードを構造化する上で非常に魅力的なモデルです。
+
+    Bosque 言語は関数型言語とブロックスコープと `{...}` 括弧を、更新可能な変数 `var!` に複数回の割り当てを許すことにより融合します ([6.3 変数の割り当て](#6.3-Variable-Assignment))。
+
+    これによってブロックスコープの言語における関数型スタイルのプログラミングが可能になり、開発者は次のようなコードを書けます。
 ---
 texts:
   en: <a name="0.3-Reference-Parameter-Threading"></a>0.3 Reference Parameter Threading
