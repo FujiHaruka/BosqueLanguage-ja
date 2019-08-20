@@ -1,0 +1,3 @@
+[submodule "BosqueLanguage"]
+	path = BosqueLanguage
+	url = https://github.com/microsoft/BosqueLanguage.git
