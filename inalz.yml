@@ -1,0 +1,9 @@
+lang:
+  source: en
+  targets:
+    - ja
+documents:
+  - source: BosqueLanguage/docs/language/overview.md
+    targets:
+      ja: README.md
+    locale: locales/overview.yml

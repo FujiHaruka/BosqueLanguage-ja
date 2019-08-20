@@ -1,0 +1,25 @@
+{
+  "name": "bosquelanguage-ja",
+  "description": "BosqueLanguage doc translation in Japanese",
+  "version": "0.1.0",
+  "author": "FujiHaruka",
+  "bugs": {
+    "url": "https://github.com/FujiHaruka/BosqueLanguage-ja/issues"
+  },
+  "homepage": "https://github.com/FujiHaruka/BosqueLanguage-ja#readme",
+  "keywords": [
+    "BosqueLanguage"
+  ],
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FujiHaruka/BosqueLanguage-ja.git"
+  },
+  "scripts": {
+    "inalz": "inalz"
+  },
+  "dependencies": {
+    "inalz": "^0.11.0"
+  }
+}
