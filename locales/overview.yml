@@ -1,0 +1,1431 @@
+texts:
+  en: Bosque Language Overview
+  ja: Bosque 言語の概要
+---
+texts:
+  en: The Bosque language derives from a combination of [TypeScript](https://www.typescriptlang.org/) inspired syntax and types plus [ML](https://www.smlnj.org/) and [Node/JavaScript](https://nodejs.org/en/) inspired semantics. This document provides an overview of the syntax, operations, and semantics in the Bosque language with an emphasis on the distinctive or unusual features in the language.
+  ja: >-
+    Bosque 言語は [TypeScript](https://www.typescriptlang.org/) にインスパイアされた構文と型に [ML](https://www.smlnj.org/) と [Node/JavaScript](https://nodejs.org/en/) にインスパイアされた意味論を組み合わせたものに由来します。
+
+    このドキュメントは Bosque 言語の構文、演算子、操作、意味論の概要を、言語の他と違う際立った特徴に強調点を置いて紹介します。
+---
+texts:
+  en: Table of Contents
+  ja: 目次
+---
+texts:
+  en: "[0 Highlight Features](#0-Highlight-Features)"
+  ja: "[0 主な特徴](#0-Highlight-Features)"
+---
+texts:
+  en: "[0.1 Immutable Values](#0.1-Immutable-Values)"
+  ja: "[0.1 イミュータブルな値](#0.1-Immutable-Values)"
+---
+texts:
+  en: "[0.2 Block Scoping](#0.2-Block-Scoping)"
+  ja: "[0.2 Block Scoping](#0.2-Block-Scoping)"
+---
+texts:
+  en: "[0.3 Reference Parameter Threading](#0.3-Reference-Parameter-Threading)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.4 Typed Strings](#0.4-Typed-Strings)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.5 Flexible Invocations](#0.5-Flexible-Invocations)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.6 Bulk Algebraic Data Operations](#0.6-Bulk-Algebraic-Data-Operations)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.7 None Processing](#0.7-None-Processing)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.8 Iterative Processing](#0.8-Iterative-Processing)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.9 Recursion](#0.9-Recursion)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.10 Determinacy](#0.10-Determinacy)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.11 Equality and Representation](#0.11-Equality-and-Representation)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.12 Errors and Checks](#0.12-Errors-and-Checks)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.13 Atomic Constructors and Factories](#0.13-Atomic-Constructors-and-Factories)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.14 Synthesis Blocks](#0.14-Synthesis-Blocks)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.15 Code Style](#0.15-Code-Style)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.15.1 Brackets Position](#0.15.1-Brackets-Position)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.15.2 Naming Rules](#0.15.2-Naming-Rules)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.15.3 Spacing Rules](#0.15.3-Spacing-Rules)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.15.4 Colon Rules](#0.15.4-Colon-Rules)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.15.5 Method Arguments](#0.15.5-Method-Arguments)"
+  ja: __COPY__
+---
+texts:
+  en: "[0.15.6 If Statements](#0.15.6-If-Statements)"
+  ja: __COPY__
+---
+texts:
+  en: "[1 Type System](#1-Type-System)"
+  ja: __COPY__
+---
+texts:
+  en: "[1.1 Nominal Types](#1.1-Nominal-Types)"
+  ja: __COPY__
+---
+texts:
+  en: "[1.2 Structural Types](#1.2-Structural-Types)"
+  ja: __COPY__
+---
+texts:
+  en: "[1.3 Parameter Code Block Types](#1.3-Parameter-Code-Block-Types)"
+  ja: __COPY__
+---
+texts:
+  en: "[1.4 Combination Types](#1.4-Combination-Types)"
+  ja: __COPY__
+---
+texts:
+  en: "[1.5 Generics](#1.5-Generics)"
+  ja: __COPY__
+---
+texts:
+  en: "[2 Core Types](#2-Core-Types)"
+  ja: __COPY__
+---
+texts:
+  en: "[3 Collections](#3-Collections)"
+  ja: __COPY__
+---
+texts:
+  en: "[4 Type Checking](#4-Type-Checking)"
+  ja: __COPY__
+---
+texts:
+  en: "[5 Expressions](#5-Expressions)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.1 Arguments](#5.1-Arguments)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.2 Constants](#5.2-Constants)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.3 Variable and Scoped Access](#5.3-Variable-and-Scoped-Access)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.4 Tuple and Record Constructors](#5.4-Tuple-and-Record-Constructors)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.5 Entity Constructors](#5.5-Entity-Constructors)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.6 PCode Constructors](#5.6-PCode-Constructors)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.7 Scoped Invokes](#5.7-Scoped-Invokes)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.8 None-Chaining](#5.8-Chaining-and-None-Chaining)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.9 Tuple Typed Access Operators](#5.9-Tuple-Typed-Access-Operators)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.10 Record Typed Access Operators](#5.10-Record-Typed-Access-Operators)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.11 Nominal Typed Access Operators](#5.11-Nominal-Typed-Access-Operators)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.12 Typed Projection](#5.12-Typed-Projection)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.13 Difference](#5.13-Difference)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.14 Update](#5.14-Update)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.15 Merge](#5.15-Merge)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.16 PCode Apply](#5.16-PCode-Apply)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.17 Invoke](#5.17-Invoke)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.18 Unary Operators](#5.19-Unary-Operators)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.19 Binary Operators](#5.20-Binary-Operators)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.20 Equality Comparison](#5.21-Equality-Comparison)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.21 Order Comparison](#5.22-Order-Comparison)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.22 Logic Operators](#5.23-Logic-Operators)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.23 None Coalescing](#5.24-None-Coalescing)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.24 Select](#5.25-Select)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.25 Statement Expressions](#5.26-Statement-Expressions)"
+  ja: __COPY__
+---
+texts:
+  en: "[5.26 Synthesis Blocks](#5.28-Synthesis-Blocks)"
+  ja: __COPY__
+---
+texts:
+  en: "[6 Statements](#6-Statements)"
+  ja: __COPY__
+---
+texts:
+  en: "[6.1 Empty](#6.1-Empty)"
+  ja: __COPY__
+---
+texts:
+  en: "[6.2 Variable Declaration](#6.2-Variable-Declaration)"
+  ja: __COPY__
+---
+texts:
+  en: "[6.3 Variable Assignment](#6.3-Variable-Assignment)"
+  ja: __COPY__
+---
+texts:
+  en: "[6.4 Structured Declaration and Assignment](#6.4-Structured-Declaration-and-Assignment)"
+  ja: __COPY__
+---
+texts:
+  en: "[6.5 Return and Yield](#6.5-Return-and-Yield)"
+  ja: __COPY__
+---
+texts:
+  en: "[6.6 Validation](#6.6-Validation)"
+  ja: __COPY__
+---
+texts:
+  en: "[6.7 If-Then-Else](#6.7-If-Then-Else)"
+  ja: __COPY__
+---
+texts:
+  en: "[6.8 Switch](#6.8-Switch)"
+  ja: __COPY__
+---
+texts:
+  en: "[6.9 Block](#6.9-Block)"
+  ja: __COPY__
+---
+texts:
+  en: "[7 Invokable Declarations](#7-Invokable-Declarations)"
+  ja: __COPY__
+---
+texts:
+  en: "[8 Concept and Entity Declarations](#8-Concept-and-Entity-Declarations)"
+  ja: __COPY__
+---
+texts:
+  en: "[9 Namespace Declarations](#9-Namespace-Declarations)"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0-Highlight-Features"></a>0 Highlight Features
+  ja: <a name="0-Highlight-Features"></a>0 主な特徴
+---
+texts:
+  en: The Bosque programming language is designed for writing code that is simple, obvious, and easy to reason about for both humans and machines. The design was driven heavily by the identification and elimination of various sources of _accidental complexity_ and insights on how they can be alleviated via the thoughtful language design.
+  ja: Bosque プログラミング言語はコードの記述をシンプルに、明確に、人間にも機械にも理解しやすくするために設計されています。その設計は、さまざまな原因からなる**偶発的な複雑さ**を特定し除去することと、思慮深い言語設計によってそれらが軽減できるという洞察に動機付けられています。
+---
+texts:
+  en: This section highlights and contains information on many of the most notable and/or unique features and design choices in the Bosque programming language.
+  ja: この節では Bosque プログラミング言語の多くの顕著でユニークな特徴と設計上の選択の中から最重要点を紹介します。
+---
+texts:
+  en: <a name="0.1-Immutable-Values"></a>0.1 Immutable Values
+  ja: __COPY__
+---
+texts:
+  en: All values in the Bosque language are immutable!
+  ja: __COPY__
+---
+texts:
+  en: Reasoning about and understanding the effect of a statement or block of code is greatly simplified when it is side-effect free. Functional languages have long benefited from the simplifications to program development, sophisticated tooling, and aggressive compiler optimizations that this model allows. From this perspective the natural choice for the Bosque language is to adopt a pure functional model with immutable data only.
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.2-Block-Scoping"></a>0.2 Block Scoping
+  ja: __COPY__
+---
+texts:
+  en: "Local variables with block structured code is a very appealing model for structuring code. The Bosque language fuses functional programming with block scopes and `{...}` braces by allowing multiple assignments to updatable variables `var!` ([6.3 Variable Assignment](#6.3-Variable-Assignment)). This supports functional style programming in a block-scoped language and allows developers to write code such as:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.3-Reference-Parameter-Threading"></a>0.3 Reference Parameter Threading
+  ja: __COPY__
+---
+texts:
+  en: "In addition to allowing multiple assignments to variables, the Bosque language also allows developers to thread parameters via `ref` argument passing. This alternative to multi-return values simplifies scenarios where a variable (often some sort of environment) is passed to a method which may use and update it. Allowing the update in the parameter eliminates the extra return value management that would otherwise be needed:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.4-Typed-Strings"></a>0.4 Typed Strings
+  ja: __COPY__
+---
+texts:
+  en: "Typed strings provide a novel mechanism for lifting known structure about the contents of a string into the type in a way that is meaningful to humans and that can be used by the type checker ([1.1.2 Typed Strings](#1.1.2-Typed-Strings)). This allows for code such as the following:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.5-Flexible-Invocations"></a>0.5 Flexible Invocations
+  ja: __COPY__
+---
+texts:
+  en: Bosque provides _named arguments_ along with _rest_ and _spread_ operators. These can be used to perform simple and powerful data manipulation as part of invocations and constructor operations ([5.1 Arguments](#5.1-Arguments)).
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.6-Bulk-Algebraic-Data-Operations"></a>0.6 Bulk Algebraic Data Operations
+  ja: __COPY__
+---
+texts:
+  en: Bulk algebraic operations in Bosque start with support for bulk reads and updates to data values. Consider the common case of having a struct with 3 fields where 2 of them need to be updated. In most languages this would need to be done on a field-by-field basis. However with the bulk data operations it is possible to perform the update as an atomic operation (unlike in an imperative style) and without manually extracting and copying fields (like in a functional style).
+  ja: __COPY__
+---
+texts:
+  en: In addition to eliminating opportunities to forget or confuse a field these operators help focus the code on the overall intent, instead of being hidden in the individual steps, and allow a developer to perform algebraic reasoning on the data structure operations. Bosque provides several flavors of these algebraic operations for various data types, tuples, records, and nominal types, and for various operations including projection, multi-update, and merge.
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.7-None-Processing"></a>0.7 None Processing
+  ja: __COPY__
+---
+texts:
+  en: "Handling `none` values is a relatively common task that can obscure the fundamental intent of a section of code with nests of cases and conditional handling for the special case. To simplify this type of code, Bosque includes various forms of _coalescing_ or _short-circuit_ operators ([5.8 Chaining and None Chaining](#5.8-Chaining-and-None-Chaining)) to enable code like:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.8-Iterative-Processing"></a>0.8 Iterative Processing
+  ja: __COPY__
+---
+texts:
+  en: A fundamental concept in a programming language is the iteration construct and a critical question is should this construct be provided as high-level functors, such as filter/map/reduce, or do programmers benefit from the flexibility available with iterative, while or for, looping constructs. To answer this question in a definitive manner the authors of [Mining Semantic Loop Idioms](https://www.microsoft.com/en-us/research/uploads/prod/2018/10/LoopIdioms.pdf) engaged in a study of all the loops "idioms" found in real-world code. The categorization and coverage results showed that almost every loop a developer would want to write falls into a small number of idiomatic patterns which correspond to higher level concepts developers are using in the code, e.g., filter, find, group, map, etc. With this result in mind the Bosque language trades structured loops for a set of high-level iterative processing constructs ([3 Collections](#3-Collections)).
+  ja: __COPY__
+---
+texts:
+  en: Eliminating the boilerplate of writing the same loops repeatedly eliminates whole classes of errors including, e.g. bounds computations, and makes the intent clear with a descriptively named functor instead of relying on a shared set of mutually known loop patterns. Critically, for enabling automated program validation and optimization, eliminating loops also eliminates the need for computing loop-invariants. Instead, and with a careful design of the collection libraries, it is possible to write precise transformers for each functor. In this case the computation of _strongest-postconditions_ or _weakest-preconditions_ avoids the complexity of generating a loop invariant and instead becomes a simple and deterministic case of formula pushing!
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.9-Recursion"></a>0.9 Recursion
+  ja: __COPY__
+---
+texts:
+  en: The lack of explicit looping constructs, and the presence of collection processing functors, is not unusual in functional languages. However, the result is often the replacement of complex loop structures with complex recursion structures. Complex raw flows obfuscate the intent of the code and hinder automated analysis and tooling regardless of if the flow is a loop or recursion.
+  ja: __COPY__
+---
+texts:
+  en: Thus, Bosque is designed to encourage limited uses of recursion, increase the clarity of the recursive structure, and enable compilers/runtimes to avoid stack related errors. This is done by introducing the `recursive` keyword which is used at both declaration sites to indicate a function/method is recursive and again at the call site so as to affirm that the caller is aware of the recursive nature of the call ([7 Invokable-Declarations](#7-Invokable-Declarations)).
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.10-Determinacy"></a>0.10 Determinacy
+  ja: __COPY__
+---
+texts:
+  en: When the behavior of a code block is under-specified the result is code that is harder to reason about and more prone to errors. As a key goal of the Bosque language is to eliminate sources of unneeded complexity that lead to confusion and errors we naturally want to eliminate these under-specified behaviors. Thus, Bosque does not have any _undefined_ behavior such as allowing uninitialized variable reads and eliminates all _under defined_ behavior as well including sorting stability and all associative collections (sets and maps) have a fixed and stable enumeration order.
+  ja: __COPY__
+---
+texts:
+  en: As a result of these design choices there is always a single _unique_ and _canonical_ result for any Bosque program. This means that developers will never see intermittent production failures or flaky unit-tests!
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.11-Equality-and-Representation"></a>0.11 Equality and Representation
+  ja: __COPY__
+---
+texts:
+  en: >-
+    Equality is a multifaceted concept in programming and ensuring consistent behavior across the many areas it can surface in a modern programming language such as `==`, `.equals`, `Set.has`, `List.sort`, is a source of subtle bugs.
+
+    This complexity further manifests itself in the need to consider the possible aliasing relations of values, in addition to their structural data, in order to understand the behavior of a block of code. The fact that _reference equality_ is chosen as a default, or is an option, is also a bit of an anachronism as reference equality heavily ties the execution to a hardware model in which objects are associated with a memory location.
+  ja: __COPY__
+---
+texts:
+  en: In light of these issues the Bosque language does not allow user visible _reference equality_ in any operation including `==` or container operations. Instead equality is defined either by the core language for the primitives `Bool`, `Int`, `String`, `GUID`, etc., or as a user defined _composite key_ `identifier` type ([5.21 Equality Comparison](#5.21-Equality-Comparison)). The composite key type allows a developer to create a distinct type to represent a composite equality comparable value that provides the notion of equality e.g. identity, primary key, equivalence, etc. that makes sense for their domain. The language also allows types to define a key field that will be used for equality/order by the associative containers in the language ([3 Collections](#3-Collections)).
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.12-Errors-and-Checks"></a>0.12 Errors and Checks
+  ja: __COPY__
+---
+texts:
+  en: A central goal of the Bosque language is to simplify the process of building high reliability software. As part of this, the language provides first-class support for expressing a full range of invariants, sanity-checks, and diagnostic assertions.
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.13-Atomic-Constructors-and-Factories"></a>0.13 Atomic Constructors and Factories
+  ja: __COPY__
+---
+texts:
+  en: To reduce the amount of boilerplate code introduced by constructors, and in particular constructors that have long argument lists that are mainly passed through to super constructors, Bosque uses construction via direct field initialization to construct entity (object) values. For many uses, this simple direct initializer approach is sufficient and there is no need for complex constructors that compute derived values as part of the constructor execution.
+  ja: __COPY__
+---
+texts:
+  en: However, it is sometimes useful to encapsulate initialization logic and, to accomplish this, we allow for the definition of `factory` functions which operate similar to constructors but, in some sense, are upside down. A factory function returns a record with all the fields needed for the enclosing entity/concept ([5.5 Entity Constructors](#5.5-Entity-Constructors)).
+  ja: __COPY__
+---
+texts:
+  en: >-
+    In this code the two `Baz` entities are allocated via the atomic initialization constructor. In the first case the omitted `h` field is set to the provided default value of `true`. The `identity` factory defines `f` and `g` values for the entity via the returned record. When invoked with the constructor syntax
+
+    this is desugared to the atomic initializer with the result of factory.
+  ja: __COPY__
+---
+texts:
+  en: With this design the need to pass data up through super calls is eliminated as the data can be directly inserted into the initializer or, if the super constructor has factory logic, then the super factory can be called and the result expanded directly into the atomic constructor as in `p = Baz{...Bar::default(), g=2}`. The result of this inverted constructor logic is that _only_ the arguments needed for internal computation of initialization values must be propagated while all others can be directly set in the initializer. The elimination of the constructor boilerplate code and reduction in argument passing simplifies the definition of new nominal types as well as the impact of cascading changes when a field (or constructor argument) is added/removed in a base definition.
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.14-Synthesis-Blocks"></a>0.14 Synthesis Blocks
+  ja: __COPY__
+---
+texts:
+  en: "**[NOT IMPLEMENTED YET]**"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.15-Code-Style"></a>0.15 Code Style
+  ja: __COPY__
+---
+texts:
+  en: >-
+    Code Style is an important part of the language. Code Style allows you to align the style of writing code. This allows you to avoid problems when reading the code and the extra errors associated with it.
+
+    In this part of the documentation for the language are examples of code style, how to format some constructions and common errors.
+  ja: __COPY__
+---
+texts:
+  en: __This documentation was written based on the source code in the repository in the core.bsq and collection.bsq files. This documentation may not be complete, but I think that we will finish it closer to the first alpha version.__
+  ja: __COPY__
+---
+texts:
+  en: "If in doubt, the following rules are used by default:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.15.1-Brackets-Position"></a>0.15.1 Brackets Position
+  ja: __COPY__
+---
+texts:
+  en: "From the position of the brackets, the readability of the entire code can vary greatly, especially if different styles are used everywhere, we recommend using the recommended style of brackets:"
+  ja: __COPY__
+---
+texts:
+  en: >-
+    To open a block, put a bracket on the line in which you declare the method.
+
+    To close a block, put a bracket on a new line.
+  ja: __COPY__
+---
+texts:
+  en: "Do:"
+  ja: __COPY__
+---
+texts:
+  en: "Don't:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.15.2-Naming-Rules"></a>0.15.2 Naming Rules
+  ja: __COPY__
+---
+texts:
+  en: "Names of methods and variables and fields start with an lower case letter and use camel humps:"
+  ja: __COPY__
+---
+texts:
+  en: "Do:"
+  ja: __COPY__
+---
+texts:
+  en: "Don't:"
+  ja: __COPY__
+---
+texts:
+  en: "Names of types start with an upper case letter:"
+  ja: __COPY__
+---
+texts:
+  en: "Do:"
+  ja: __COPY__
+---
+texts:
+  en: "Don't:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.15.3-Spacing-Rules"></a>0.15.3 Tabulation and Spacing
+  ja: __COPY__
+---
+texts:
+  en: Use an indent of 4 spaces or tabulation as 4 spaces
+  ja: __COPY__
+---
+texts:
+  en: "Do:"
+  ja: __COPY__
+---
+texts:
+  en: "Don't:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.15.4-Colon-Rules"></a>0.15.4 Colon
+  ja: __COPY__
+---
+texts:
+  en: "If a colon is placed between the entity and the type, then the space before colon is omitted:"
+  ja: __COPY__
+---
+texts:
+  en: "Do:"
+  ja: __COPY__
+---
+texts:
+  en: "Don't:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.15.5-Method-Arguments"></a>0.15.5 Method Arguments
+  ja: __COPY__
+---
+texts:
+  en: "Methods with a small number of arguments can be written on one line:"
+  ja: __COPY__
+---
+texts:
+  en: "Do:"
+  ja: __COPY__
+---
+texts:
+  en: "Don't:"
+  ja: __COPY__
+---
+texts:
+  en: "Methods with longer signatures must be formatted so that each parameter is located on a new line.:"
+  ja: __COPY__
+---
+texts:
+  en: "Do:"
+  ja: __COPY__
+---
+texts:
+  en: "Don't:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="0.15.6-If-Statements"></a>0.15.6 If Statements
+  ja: __COPY__
+---
+texts:
+  en: The rules are the same as in the ([Brackets Position](#0.15.1-Brackets-Position)), only the else block is added. Below is an example of how to write and how not to.
+  ja: __COPY__
+---
+texts:
+  en: "Do:"
+  ja: __COPY__
+---
+texts:
+  en: "Don't:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="1-Type-System"></a>1 Type System
+  ja: __COPY__
+---
+texts:
+  en: The Bosque language supports a simple and non-opinionated type system that allows developers to use a range of structural, nominal, and combination types to best convey their intent and flexibly encode the relevant features of the problem domain.
+  ja: __COPY__
+---
+texts:
+  en: >-
+    _Notation_:
+
+    As part of describing the type system we use the following notation which is **not** part of the Bosque language:
+  ja: __COPY__
+---
+texts:
+  en: <a name="1.1-Nominal-Types"></a>1.1 Nominal Types
+  ja: __COPY__
+---
+texts:
+  en: The nominal type system is a mostly standard _object-oriented_ design with parametric polymorphism provided by generics. All type names **must** start with a capital letter - `MyType` is a valid type name while `myType` is not.
+  ja: __COPY__
+---
+texts:
+  en: Users can define abstract types ([TODO]()), `concept` declarations, which allow both abstract definitions and inheritable implementations for `const` members ([TODO]()), `static` functions ([TODO]()), `field` members ([TODO]()), and virtual `method` members ([TODO]()). Bosque `concept` types are fully abstract and can never be instantiated concretely. The `entity` types can provide concepts as well as override definitions in them and can be instantiated concretely but can never be further inherited from.
+  ja: __COPY__
+---
+texts:
+  en: Developers can alias types or create special types ([TODO]()) using `typedef`, `enum`, and `identifier` constructs ([TODO]()).
+  ja: __COPY__
+---
+texts:
+  en: The Bosque core library defines several unique concepts/entities. The `Any` type is an uber type which all others are a subtype of, the `None` and `Some` types are for distinguishing around the unique `none` value, and `Tuple`, `Record`, etc. exist to unify with the structural type system ([section 2](#2-Core-Types)). The language has primitives for `Bool`, `Int`, `String`, etc. as well as the expected set of parametric collection types such as `List<T>` `Map<K, V>` ([section 3](#2-Collections)).
+  ja: __COPY__
+---
+texts:
+  en: "Examples of nominal types include:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="1.1.1-Type-Relation-on-Nominal-Types"></a>1.1.1 Type Relation on Nominal Types
+  ja: __COPY__
+---
+texts:
+  en: "The subtype relation on nominal types `T1` and `T2` is the standard parametric inheritance relation where `T1 <: T2` if any of the following are true:"
+  ja: __COPY__
+---
+texts:
+  en: "`T1 === T2`"
+  ja: __COPY__
+---
+texts:
+  en: "`T1` provides `T3` && `T3 <: T2` ([8 Concept and Entity Declarations](#8-Concept-and-Entity-Declarations))"
+  ja: __COPY__
+---
+texts:
+  en: "`T1 === B1<G1>` && `T2 === B2<G2>` && `B1 === B2` && `G1 <: G2`"
+  ja: __COPY__
+---
+texts:
+  en: "The first cases is if the two types are syntactically identical names. The second case covers the situation in which `T1` is declared to provide a concept that is, transitively, a subtype of `T2`. The final case is the standard parametric subtype relation on generic parameters. Some examples of these include:"
+  ja: __COPY__
+---
+texts:
+  en: Note that the subtype relation is _covariant_ as all generic types are subtyped on the parameters. This is always safe as all data types in Bosque are immutable ([0.1 Immutable Values](#0.1-Immutable-Values)).
+  ja: __COPY__
+---
+texts:
+  en: <a name="1.1.2-Typed-Strings"></a>1.1.2 Typed Strings
+  ja: __COPY__
+---
+texts:
+  en: "Typed strings provide a novel mechanism for lifting known structure about the contents of a string into the type in a way that is meaningful to humans and that can be used by the type checker. If a type `Ty` is declared to `provide` the `Parsable` concept, which has the static method `tryParse(str: String): Ty | None` then it is possible to declare a string value type as `String<Ty>` which indicates that the call `Ty::tryParse` returns `Ty` (not `None`)."
+  ja: __COPY__
+---
+texts:
+  en: "This ties the type of the string to the entity and then, by extension, into the larger type system. If we have the type relation `Ty <: Ty2` then the type checker will allow `String<Ty> <: String<Ty2>` and of course `String<Ty> <: String`."
+  ja: __COPY__
+---
+texts:
+  en: "This allows for code such as the following:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="1.2-Structural-Types"></a>1.2 Structural Types
+  ja: __COPY__
+---
+texts:
+  en: The structural type system includes Tuples and Records. These are self-describing, allow for optional entries with the `?` syntax, and can be specified as closed or open using the `...` syntax.
+  ja: __COPY__
+---
+texts:
+  en: <a name="1.2.1-Tuples"></a>1.2.1 Tuples
+  ja: __COPY__
+---
+texts:
+  en: "A tuple is a list of entries where each entry provides a type and can be marked as optional. Some examples include:"
+  ja: __COPY__
+---
+texts:
+  en: The subtype relation on tuples `T1` and `T2` is a lexicographic order on the tuple entries where a required entry is always less than an optional (`?`) entry and open tuples match any suffixes of a closed tuple.
+  ja: __COPY__
+---
+texts:
+  en: The tuple `[...]` is a supertype of all others and `[...]` is a subtype of the special nominal type `Tuple`.
+  ja: __COPY__
+---
+texts:
+  en: <a name="1.2.2-Records"></a>1.2.2 Records
+  ja: __COPY__
+---
+texts:
+  en: "A record is a map of identifier names to entries where each entry provides a type and can be marked as optional. Some examples include:"
+  ja: __COPY__
+---
+texts:
+  en: The subtype relation on records `R1` and `R2` is a subset based order on the record entries where a required entry is always less than an optional (`?`) entry and open records match any suffixes of a closed record.
+  ja: __COPY__
+---
+texts:
+  en: The record `{...}` is a supertype of all others and `{...}` is a subtype of the special nominal type `Record`.
+  ja: __COPY__
+---
+texts:
+  en: <a name="1.3-Parameter-Code-Block-Types"></a>1.3 Parameter Code Block Types
+  ja: __COPY__
+---
+texts:
+  en: "Parameter code blocks, or _pcode_ functions, are special values and types in the Bosque language that can be used to specialize the behavior of another function or method. They cannot be stored in variables or values and cannot be passed to other calls. Thus, they must be placed as literals in an invocation and can be invoked using the given parameter name. "
+  ja: __COPY__
+---
+texts:
+  en: "The parameter code types can use _named_ arguments for bindings arguments and, thus, names are part of the type signature. The special `_` parameter name indicates a \"don't care\" for a parameter name. PCode types also allow for optional parameters, with the `?` syntax, and _rest_ parameters using the `...` syntax. The types of the rest parameters can be specified as any of the collection types from the core library including, lists, sets, and maps. Example types include:"
+  ja: __COPY__
+---
+texts:
+  en: "The subtype relation on pcode types `F1` and `F2` requires equality on parameter counts and types but allows covariance. "
+  ja: __COPY__
+---
+texts:
+  en: <a name="1.4-Combination-Types"></a>1.4 Combination Types
+  ja: __COPY__
+---
+texts:
+  en: With the base structural and nominal types Bosque also supports _noneable_ (`T1?`), _union_ (`T1 | T2`), and limited _conjunction_ (`C1 & C2`) concept types.
+  ja: __COPY__
+---
+texts:
+  en: "Example combination types include:"
+  ja: __COPY__
+---
+texts:
+  en: The `T1 | T2`notation specifies a type may be either `T1` _or_ `T2` while the notation `T1?` is shorthand for `T1 | None`. Note that this implies that `(T1?)?` is the same type as `T1?`. The type system also admits conjunction but limits it to conjunctions of `concept` types where `C1 & C2` indicates a type must provide both `C1` and `C2`.
+  ja: __COPY__
+---
+texts:
+  en: As shown in the above examples several combination types reduce to simpler version based on algebraic rules.
+  ja: __COPY__
+---
+texts:
+  en: <a name="2-Core-Types"></a>2 Core Types
+  ja: __COPY__
+---
+texts:
+  en: "**[TODO]**"
+  ja: __COPY__
+---
+texts:
+  en: <a name="3-Collections"></a>3 Collections
+  ja: __COPY__
+---
+texts:
+  en: "**[TODO]**"
+  ja: __COPY__
+---
+texts:
+  en: <a name="4-Type-Checking"></a>4 Type Checking
+  ja: __COPY__
+---
+texts:
+  en: "**[TODO]**"
+  ja: __COPY__
+---
+texts:
+  en: <a name="5-Expressions"></a>5 Expressions
+  ja: __COPY__
+---
+texts:
+  en: The Bosque language provides a rich set of expressions that support compact data manipulation and expression of intent. A major theme of these operators is to provide simple to reason about semantics that capture common operations with the goal of improving productivity and code quality.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.1-Arguments"></a>5.1 Arguments
+  ja: __COPY__
+---
+texts:
+  en: "Bosque provides _named arguments_ along with _rest_ and _spread_ operators. These can be used to perform simple and powerful data manipulation as part of invocations and constructor operations. Examples of these situations include:"
+  ja: __COPY__
+---
+texts:
+  en: The first of the examples show the use of rest and named arguments in call signatures. The call to `nsum` takes an arbitrary number of arguments which are automatically converted into a List. The calls to `np` show how named parameters can be used and mixed with positional parameters.
+  ja: __COPY__
+---
+texts:
+  en: The next set of examples show how _spread_ arguments can be used. In the first case a tuple, `[1, 2, 3]`, is created and assigned to the variable `t`. This tuple is then spread to provide the last three arguments to `nsum`. Semantically the call `nsum(0, ...t)` is the same as `nsum(0, t[0], t[1], t[2])` and, as a result, the value in `p` is the same as the value computed for `x`. The spread operator also works for records and named parameters. In the example the call to `np(...r)` is semantically the same as `np(p1=r.p1, p2=r.p2)`. Although not shown here spread can also be used on any collection, List, Set, Map, based data values as well.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.2-Constants"></a>5.2 Constants
+  ja: __COPY__
+---
+texts:
+  en: >-
+    Constant value expressions include `none`, `true`, `false` _Integer_, _String_,
+
+    _TypedString_, and _TypedStringLiteral_:
+  ja: __COPY__
+---
+texts:
+  en: Most of these literal expressions are familiar from other languages but Bosque introduces the concept of _Typed Strings_ ([1.1.2 Typed Strings](#1.1.2-Typed-Strings)). The constant notation includes `Type'...'` to introduce a literal typed string and `Type@'...'` to introduce a literal object that the string represents. Semantically the expression `Type@'...'` is equivalent to the expression `Type::tryParse(Type'...')`.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.3-Variable-and-Scoped-Access"></a>5.3 Variable and Scoped Access
+  ja: __COPY__
+---
+texts:
+  en: "Simple name expressions can be used to refer to local, argument, and captured variables as well as to type or globally scoped constants. Examples include:"
+  ja: __COPY__
+---
+texts:
+  en: Names in Bosque are resolved using the lexical scope where they are used, starting from the current block, up to arguments, captured variables, type and finally namespace scoping. Shadowing is not permitted on any variables. However, arguments/locals in a _pcode_ body can be the same as names in the enclosing declaring body (preventing the closure capture [section 5.6 PCode Constructors](#5.6-PCode-Constructors)).
+  ja: __COPY__
+---
+texts:
+  en: The ability to perform conjunction scoped constant resolution works by looking up the definition of the constant using both `Bar` and `Baz`. If the constant definition is the same for both then this is well defined (and legal) otherwise it is a type error.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.4-Tuple-and-Record-Constructors"></a>5.4 Tuple and Record Constructors
+  ja: __COPY__
+---
+texts:
+  en: Tuple and records are constructed via a simple literal constructor syntax where the values for each tuple or record entry can be any other expression in the language.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.5-Entity-Constructors"></a>5.5 Entity Constructors
+  ja: __COPY__
+---
+texts:
+  en: "To reduce the amount of boilerplate code introduced by constructors, and in particular constructors that have long argument lists that are mainly passed through to super constructors, the Bosque language uses construction via direct field initialization to construct entity (object) values. For many uses this simple direct initializer approach is sufficient and there is no need for complex constructors that compute derived values as part of the constructor execution. Examples of this syntax include:"
+  ja: __COPY__
+---
+texts:
+  en: In this code snippet two `Baz` entities are allocated via the atomic initialization constructor. In the second case the omitted `h` field is set to the provided default value of true.
+  ja: __COPY__
+---
+texts:
+  en: Sometimes it is useful to encapsulate initialization logic and, to accomplish this, Bosque provides for the definition of `factory` functions which operate similar to constructors but, in some sense, are upside down. A factory function returns a record with all the fields needed for the enclosing entity/concept. So, the `identity` factory defines `f` and `g`. When invoked with the constructor syntax this is desugared to the atomic initializer being used with expanded record result of factory function, `Baz{...Baz::identity(1)}`, in our example.
+  ja: __COPY__
+---
+texts:
+  en: With this design the need to pass data up through super calls is eliminated as the data can be directly inserted into the initializer or, if the super constructor has factory logic, then the super factory can be called and the result expanded directly into the atomic constructor as in `Baz{...Bar::default(), g=2}` below.
+  ja: __COPY__
+---
+texts:
+  en: The result of this inverted constructor logic is that _only_ the arguments needed for internal computation of initialization values must be propagated while all others can be directly set in the initializer. The elimination of the constructor boilerplate code and reduction in argument passing simplifies the definition of new nominal types as well as the impact of cascading changes when a field (or constructor argument) is added/removed in a base definition.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.6-PCode-Constructors"></a>5.6 PCode Constructors
+  ja: __COPY__
+---
+texts:
+  en: PCode constructors in the Bosque language combine a code definition for the pcode function body with a variable _copy_ semantics for closure captured variables on creation. The body definition can be either an expression or a statement block. The constructor must always be placed in the direct argument position of a function/method call that takes a pcode function argument.
+  ja: __COPY__
+---
+texts:
+  en: In the above examples the type of the pcode expression is explicitly declared via the explicit type declarations for the arguments and return value. However, we also allow these types to be inferred automatically.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.7-Scoped-Invokes"></a>5.7 Scoped Invokes
+  ja: __COPY__
+---
+texts:
+  en: >-
+    Scoped invocations in the Bosque language include calls to global functions and
+
+    static member functions. The arguments variations in [section 5.1 Arguments](#5.1-Arguments) can be used in any of these invocations.
+  ja: __COPY__
+---
+texts:
+  en: Most of these forms are familiar from other object-oriented languages but the ability to perform static invocations using conjunction types is unique. As with scoped constant resolution this works by looking up the definition of the invoke using both `Bar` and `Baz`. If the constant definition is the same for both then this is well defined (and legal) otherwise it is a type error.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.8-Chaining-and-None-Chaining"></a>5.8 Chaining and None-Chaining
+  ja: __COPY__
+---
+texts:
+  en: Handling `none` values (or null, undefined, etc. in other languages) is a relatively common task that can obscure the fundamental intent of a section of code with nests of cases and conditional handling for the special case.
+  ja: __COPY__
+---
+texts:
+  en: The definition of Bosque provides support for short-circuiting `none` values on all chainable actions, using a `?` notion.
+  ja: __COPY__
+---
+texts:
+  en: When combined with a chainable operator (below) the `?` operator short-circuits evaluation and returns `none` whenever the expression value is `none`.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.9-Tuple-Typed-Access-Operators"></a>5.9 Tuple Typed Access Operators
+  ja: __COPY__
+---
+texts:
+  en: "The tuple typed chainable operators include:"
+  ja: __COPY__
+---
+texts:
+  en: .i to get the value at index i in the tuple or none if the index is not defined
+  ja: __COPY__
+---
+texts:
+  en: .[i, ..., j], create a new tuple using the values at indices i, ..., j
+  ja: __COPY__
+---
+texts:
+  en: "Examples of these include:"
+  ja: __COPY__
+---
+texts:
+  en: As in most languages the `[]` operator allows access to individual elements in a tuple while the bulk algebraic `.[]` operator provides compact and simple reshaping of a tuple data value.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.10-Record-Typed-Access-Operators"></a>5.10 Record Typed Access Operators
+  ja: __COPY__
+---
+texts:
+  en: "The record typed chainable operators include:"
+  ja: __COPY__
+---
+texts:
+  en: .p to get the value associated with the property or none if the property is not defined
+  ja: __COPY__
+---
+texts:
+  en: .{f, ..., g}, create a new record using the values at properties f, ..., g
+  ja: __COPY__
+---
+texts:
+  en: "Examples of these include:"
+  ja: __COPY__
+---
+texts:
+  en: As in most languages the `.` operator allows access to individual elements in a record while the bulk algebraic `.{}` operator provides compact and simple reshaping of a record data value.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.11-Nominal-Typed-Access-Operators"></a>5.11 Nominal Typed Access Operators
+  ja: __COPY__
+---
+texts:
+  en: "Fields in nominal types can be chain accessed in a similar manner as properties in records:"
+  ja: __COPY__
+---
+texts:
+  en: .f to get the value associated with the field or error if the field is not defined on the type
+  ja: __COPY__
+---
+texts:
+  en: .{f, ..., g}, create a new _record_ using the values at fields f, ..., g
+  ja: __COPY__
+---
+texts:
+  en: "Examples of these include:"
+  ja: __COPY__
+---
+texts:
+  en: As in most languages the `.` operator allows access to individual elements in a entity (object) while the bulk algebraic `.{}` operator provides compact and simple reshaping of a data value. Note that the result type is a _record_.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.12-Typed-Projection"></a>5.12 Typed Projection
+  ja: __COPY__
+---
+texts:
+  en: "In addition to extracting new tuples/records using the `.[]` and `.{}` notation the Bosque language also supports projecting out structured data using types via the notation _Exp_`->project<`_Type_`>()` method. This chain operator can be used on tuples, records, and nominal types:"
+  ja: __COPY__
+---
+texts:
+  en: Note that the result type of projecting from a nominal type is a _record_.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.13-Difference"></a>5.13 Difference
+  ja: __COPY__
+---
+texts:
+  en: "**[Not Implemented Yet]** delete indecies `->delete(i, ..., j)`, properties `->delete(f, ..., g)`, or types `\\#`_Type_."
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.14-Update"></a>5.14 Update
+  ja: __COPY__
+---
+texts:
+  en: In most languages updating (or creating an updated copy) is done on a field-by-field basis. However, with the bulk updates in Bosque it is possible to perform the update as an atomic operation and without manually extracting and copying fields. Bosque provides a chainable update operations for tuples (_Exp_`->update(i=e1, ... j=ek)` notation), records, and nominal types (_Exp_`->update(f=e1, ... f=ek)`).
+  ja: __COPY__
+---
+texts:
+  en: Note that for tuples updating past the end of the tuple will `none` pad the needed locations while for records it will insert the specified property. Updating a non-existent field on a nominal type is an error.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.15-Merge"></a>5.15 Merge
+  ja: __COPY__
+---
+texts:
+  en: The update operations allow bulk algebraic copy-modification of values but require the literal properties/indecies/fields to be specified. To allow more programmatic operation the Bosque language also provides chainable merge operations which take pairs of tuple/tuple, record/record, or nominal/record and merge the data values using the syntax _Exp_`->merge(`_Exp_`)`. The tuple/tuple operation maps to append, record/record is dictionary merge, and nominal/record is bulk update fields.
+  ja: __COPY__
+---
+texts:
+  en: The ability to programmatically merge into values allows us to write concise data processing code and eliminate redundant code copying around individual values. In addition to helping prevent subtle bugs during initial coding the operators can also simplify the process of updating data representations when refactoring code by reducing the number of places where _explicit_ value deconstruction, update, and copies need to be used.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.16-PCode-Apply"></a>5.16 PCode Apply
+  ja: __COPY__
+---
+texts:
+  en: A pcode argument is invoked using the notation -- pcode`(...)`
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.17-Invoke"></a>5.17 Invoke
+  ja: __COPY__
+---
+texts:
+  en: The chainable invoke operator `->` is used to invoke both member methods from nominal types.
+  ja: __COPY__
+---
+texts:
+  en: For member method invocation the invoke operator will handle any virtual method resolution, either from the dynamic object type or from the specified base overload when using the `->::`_Type_ syntax.
+  ja: __COPY__
+---
+texts:
+  en: The Bosque type system provides a unified model for all structural, primitive, and nominal types. So, methods can be invoked on any value. See the [core types](#2-Core-Types) section for more info on what invocations are supported.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.18-Unary-Operators"></a>5.19 Unary Operators
+  ja: __COPY__
+---
+texts:
+  en: "Bosque supports the three unary prefix operators:"
+  ja: __COPY__
+---
+texts:
+  en: "`!` will negate a `Bool` value _and_ converts the value `none` into `true`"
+  ja: __COPY__
+---
+texts:
+  en: "`+` is a nop but is often useful for indicating intent"
+  ja: __COPY__
+---
+texts:
+  en: "`-` negates an integer value"
+  ja: __COPY__
+---
+texts:
+  en: "Examples include:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.19-Binary-Operators"></a>5.20 Binary Operators
+  ja: __COPY__
+---
+texts:
+  en: "Bosque supports a range of binary operators which can be applied to `Int` values including `+`, `-`, `*`, `/`, and `%`. Examples include:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.20-Equality-Comparison"></a>5.21 Equality Comparison
+  ja: __COPY__
+---
+texts:
+  en: "The Bosque language provides `==` and `!=` operators which work for values of the following types:"
+  ja: __COPY__
+---
+texts:
+  en: "`None` where `none` may be compared with values of any other type"
+  ja: __COPY__
+---
+texts:
+  en: "`Bool`"
+  ja: __COPY__
+---
+texts:
+  en: "`Int`"
+  ja: __COPY__
+---
+texts:
+  en: "`String` where typed strings are implicitly coerced to their untyped version"
+  ja: __COPY__
+---
+texts:
+  en: "`GUID`"
+  ja: __COPY__
+---
+texts:
+  en: "`Enum` where their types and values must be the same"
+  ja: __COPY__
+---
+texts:
+  en: "`IdKey` where their types and values must be the same"
+  ja: __COPY__
+---
+texts:
+  en: "Examples of the equality operators on primitive values include:"
+  ja: __COPY__
+---
+texts:
+  en: Bosque _does not_ admit _reference equality_ in any form. A program can either use explicit comparison on a primitive type _or_ a developer can define an identifier key that provides the notion of equality e.g. identity, primary key, equivalence, etc. that makes sense for their domain.
+  ja: __COPY__
+---
+texts:
+  en: Identifier keys are compared using the type of the key and the pairwise equality of each field defined in the key.
+  ja: __COPY__
+---
+texts:
+  en: Collections and operations on them are also defined to use this definition of equality and custom key valued fields ([section 3 Collections](#3-Collections)) instead of overloaded equals or compare methods.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.21-Order-Comparison"></a>5.22 Order Comparison
+  ja: __COPY__
+---
+texts:
+  en: Bosque supports a range of order operators, `<`, `>`, `<=`, and `>=` which can be applied to `Int` or `String` values. For typed strings, `String<T>` the compare operator ignores the generic type and is based on the order of the underlying raw string e.g. both arguments are coerced to `String`.
+  ja: __COPY__
+---
+texts:
+  en: "**[TODO]** Extend to tuples/records then Enums and IdKeys"
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.22-Logic-Operators"></a>5.23 Logic Operators
+  ja: __COPY__
+---
+texts:
+  en: "Bosque provides the standard short-circuiting `&&` and `||` operators as well as a implies `==>` operator. These operators all work on `Bool` typed values and will implicitly convert `none` into false. Examples include:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.23-None-Coalescing"></a>5.24 None Coalescing
+  ja: __COPY__
+---
+texts:
+  en: Bosque provides specific none-coalescing operations, `?|` and `?&`, as opposed to truthy based coalescing that overloads the logical and/or operators.
+  ja: __COPY__
+---
+texts:
+  en: The `?|` operator short-circuits on non-none values while the `?&` operator short-circuits on none values.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.24-Select"></a>5.25 Select
+  ja: __COPY__
+---
+texts:
+  en: The select operator uses a condition which may return a `Bool` or `None` and uses this to select between to lazily evaluated alternative expressions. The `none` value is automatically coerced to `false`.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.25-Statement-Expressions"></a>5.26 Statement Expressions
+  ja: __COPY__
+---
+texts:
+  en: "Bosque includes _Switch_, _If_, and _Block_ statements ([section 6 Statements](#6-Statements)) which can be used as both expressions and statements. It also allows these to be used in expression positions where the action blocks in If/Switch are treated as expressions and, instead of `return`, a block will `yield` a result:"
+  ja: __COPY__
+---
+texts:
+  en: Note that the introduction of an expression block creates a new lexical scope for any variables declared inside. Thus, these will not pollute the enclosing namespace.
+  ja: __COPY__
+---
+texts:
+  en: The _If_ statement conditions allow `Bool` and `None` types.
+  ja: __COPY__
+---
+texts:
+  en: The _Switch_ statements support destructuring and type operations in the match just as described in [section 6.6 Match](#6.8-Switch).
+  ja: __COPY__
+---
+texts:
+  en: When block statements are used as expressions they cannot use `return` statements inside.
+  ja: __COPY__
+---
+texts:
+  en: <a name="5.26-Synthesis-Blocks"></a>5.28 Synthesis Blocks
+  ja: __COPY__
+---
+texts:
+  en: "**[Not Implemented Yet]**"
+  ja: __COPY__
+---
+texts:
+  en: <a name="6-Statements"></a>6 Statements
+  ja: __COPY__
+---
+texts:
+  en: Given the rich set of expression primitives in Bosque there is a reduced need for a large set of statement combinators. The language includes the expected _Match_ and _If_ which can be used as both expressions and statements as well as _structured assignment_ for easy destructuring of return values. As high reliability software is a key goal, Bosque provides an `assert`, enabled only for debug builds, and a `check`, enabled on all builds, statements as first class features in the language (in addition to pre/post conditions and class invariants). We also note that there are **no looping constructs** in the language.
+  ja: __COPY__
+---
+texts:
+  en: Local variables with block structured code is an appealing model for programming. The statements provided in the Bosque language seek to fuse functional programming with block scopes and `{...}` braces by allowing multiple assignments to a variable and scoped blocks.
+  ja: __COPY__
+---
+texts:
+  en: <a name="6.1-Empty"></a>6.1 Empty
+  ja: __COPY__
+---
+texts:
+  en: The empty statement is simply the `;` which has no effect but is a legal statement.
+  ja: __COPY__
+---
+texts:
+  en: <a name="6.2-Variable-Declaration"></a>6.2 Variable Declaration
+  ja: __COPY__
+---
+texts:
+  en: "Variable declarations in Bosque can be declared as constant in the scope using the `var` declaration form:"
+  ja: __COPY__
+---
+texts:
+  en: "Examples of these declarations are:"
+  ja: __COPY__
+---
+texts:
+  en: "`var` _Identifier_ `=` _Exp_`;`"
+  ja: __COPY__
+---
+texts:
+  en: "`var` _Identifier_`:`_Type_ `=` _Exp_`;`"
+  ja: __COPY__
+---
+texts:
+  en: If the type is omitted in the declaration it is inferred from the type of the expression used to initialize the variable.
+  ja: __COPY__
+---
+texts:
+  en: Alternatively variables can be declared as updatable in the scope using the `var!` declaration form. In the `var!` form an initializer expression can be used to set the initial value for the variable or it can be omitted to leave the variable uninitialized.
+  ja: __COPY__
+---
+texts:
+  en: "`var!` _Identifier_`:` _Type_`;`"
+  ja: __COPY__
+---
+texts:
+  en: "`var!` _Identifier_ `=` _Exp_`;`"
+  ja: __COPY__
+---
+texts:
+  en: "`var!` _Identifier_`:`_Type_ `=` _Exp_`;`"
+  ja: __COPY__
+---
+texts:
+  en: Using the `var!` form allows for later assignment statements ([6.3 Variable Assignment](#6.3-Variable-Assignment)) to update the value of the variable. It is an error to use an uninitialized variable unless all possible paths flowing to the use _must_ have assigned it a value.
+  ja: __COPY__
+---
+texts:
+  en: "Examples of these declarations are:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="6.3-Variable-Assignment"></a>6.3 Variable Assignment
+  ja: __COPY__
+---
+texts:
+  en: Variables declared as mutable, using the `var!` syntax, can be modified by later assignment statements.
+  ja: __COPY__
+---
+texts:
+  en: "Updates can occur in different blocks of code as well:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="6.4-Structured-Declaration-and-Assignment"></a>6.4 Structured Declaration and Assignment
+  ja: __COPY__
+---
+texts:
+  en: In addition to single variable declarations and assignments the Bosque language also supports de-structuring values with declaration/assignment to multiple variables simultaneously.
+  ja: __COPY__
+---
+texts:
+  en: "Just as with single variable declaration, variables can be declared as mutable:"
+  ja: __COPY__
+---
+texts:
+  en: "Since including `var` or `var!` for each variable is often redundant and cluttered you can do a single global declaration for all variables in the assignment:"
+  ja: __COPY__
+---
+texts:
+  en: "In addition to declaration variables can also be updated as part of a structured assignment:"
+  ja: __COPY__
+---
+texts:
+  en: "It is possible to mix declarations and assignments:"
+  ja: __COPY__
+---
+texts:
+  en: "Finally, as in many cases there are parts of a structure that are not useful, Bosque provides ways to ignore these values:"
+  ja: __COPY__
+---
+texts:
+  en: <a name="6.5-Return-and-Yield"></a>6.5 Return and Yield
+  ja: __COPY__
+---
+texts:
+  en: Within a block of code the `return` statement exits the current invocation with the value of the expression as the result. The `yield` statement is used in an expression block ([5.26 Statement Expressions](#5.26-Statement-Expressions)) to exit the block with the value of the expression as the result.
+  ja: __COPY__
+---
+texts:
+  en: Error code return checking and handling can frequently obscure the core flow of a function and result in subtle errors. To simplify the logic or return values with error codes the Bosque language provides a return with, _Exp_ `or` (`return` | `yield`) (_Exp_)? (`when` _Cond_)?, syntax.
+  ja: __COPY__
+---
+texts:
+  en: <a name="6.6-Validation"></a>6.6 Validation
+  ja: __COPY__
+---
+texts:
+  en: For statement level validation statement the Bosque language provides the `assert` and `check` statements. The `assert` is only enabled in debug builds while `check` is enabled in all builds. If the condition provided evaluates to false both statements will raise an error.
+  ja: __COPY__
+---
+texts:
+  en: "The error semantics in Bosque are unique. In most languages errors are distinguishable as runtime error reporting requires the inclusion of observable information, like line numbers and error messages, to support failure analysis and debugging. However, Since Bosque execution is fully deterministic ([0.10 Determinacy](#0.10-Determinacy)) and repeatable, the language has two execution semantics: _deployed_ and _debug_. In the deployed semantics _all runtime errors_ are indistinguishable while in the debug semantics errors contain full line number, call-stack, and error metadata. When an error occurs in _deployed_ mode the runtime simply aborts, resets, and re-runs the execution in _debug_ mode to compute the precise error!"
+  ja: __COPY__
+---
+texts:
+  en: <a name="6.7-If-Then-Else"></a>6.7 If-Then-Else
+  ja: __COPY__
+---
+texts:
+  en: The conditional if statements in Bosque are classical conditional control flow structures.
+  ja: __COPY__
+---
+texts:
+  en: Note that dangling `elifs` must have a final `else` block.
+  ja: __COPY__
+---
+texts:
+  en: <a name="6.8-Switch"></a>6.8 Switch
+  ja: __COPY__
+---
+texts:
+  en: Bosque provides a `switch` statement that supports simple literal dispatch, type based dispatch, pattern matching, and optional additional constraints. A switch statement must be exhaustive in the case list so there is a simple wildcard case option `_` that matches anything.
+  ja: __COPY__
+---
+texts:
+  en: "A simple switch statement is:"
+  ja: __COPY__
+---
+texts:
+  en: "The case statement uses the same syntax as structured assignments (plus checking literal values) and can bind variables:"
+  ja: __COPY__
+---
+texts:
+  en: "The `switch` statement also supports matching on the type of the value as in the following example:"
+  ja: __COPY__
+---
+texts:
+  en: "The `switch` statement supports additional conditions with the use of a `when` clause. This clause can be any boolean expression and, in the case of bound variables, may refer to them as well. "
+  ja: __COPY__
+---
+texts:
+  en: Finally, a switch statement is allowed to mix `case` and `type` matches *but* it is required to be exhaustive. The matches are checked in order from top to bottom, first matching option is taken, and if none of the matches are valid a runtime error is raised.
+  ja: __COPY__
+---
+texts:
+  en: <a name="6.9-Block"></a>6.9 Block
+  ja: __COPY__
+---
+texts:
+  en: Block statements in Bosque are sequences of statements. The block introduces a new lexical scope for any variables declared inside.
+  ja: __COPY__
+---
+texts:
+  en: <a name="7-Invokable-Declarations"></a>7 Invokable Declarations
+  ja: __COPY__
+---
+texts:
+  en: "**[TODO]**"
+  ja: __COPY__
+---
+texts:
+  en: "[TODO] discuss `ref` parameters threading"
+  ja: __COPY__
+---
+texts:
+  en: "[TODO] discuss `recursive` call management"
+  ja: __COPY__
+---
+texts:
+  en: <a name="8-Concept-and-Entity-Declarations"></a>8 Concept and Entity Declarations
+  ja: __COPY__
+---
+texts:
+  en: "**[TODO]**"
+  ja: __COPY__
+---
+texts:
+  en: <a name="9-Namespace-Declarations"></a>9 Namespace Declarations
+  ja: __COPY__
+---
+texts:
+  en: "**[TODO]**"
+  ja: __COPY__
